@@ -41,6 +41,13 @@ temperature_config = {
     "humanities": 0.1,
 }
 
+FOLDER_ID = os.environ.get("FOLDER_ID")
+YANDEX_TOKEN = os.environ.get("YANDEX_TOKEN")
+YANDEX_POST_URL = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+
+GIGACHAT_TOKEN = os.environ.get("GIGACHAT_TOKEN")
+SBER_POST_URL = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"
+
 
 def load_questions(question_file: str):
     """Load questions from a file."""
@@ -320,6 +327,94 @@ def chat_completion_cohere(model, messages, temperature, max_tokens):
     
     return output
 
+
+def chat_completion_yandex(model, messages, temperature, max_tokens, api_dict=None):
+    data = {
+        "modelUri": f"gpt://{FOLDER_ID}/{model}/latest",
+        "completionOptions": {
+            "stream": False,
+            "temperature": temperature,
+            "maxTokens": max_tokens
+        },
+        "messages": messages
+    }
+
+    # Set up the headers
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Api-Key {YANDEX_TOKEN}",
+    }
+
+    output: str = API_ERROR_OUTPUT
+
+    for _ in range(API_MAX_RETRY):
+        try:
+            response = requests.post(YANDEX_POST_URL, headers=headers, json=data)
+
+            response.raise_for_status()
+            response_json = response.json()
+
+            output = response_json["result"]["alternatives"][0]["message"]["text"]
+
+            time.sleep(1)
+
+            break
+        except requests.exceptions.HTTPError as http_err:
+            print(f"HTTP error occurred: {repr(http_err)}, code: {http_err.response.status_code}")
+            if http_err.response.status_code == 429:
+                print(f"Sleep for {API_RETRY_SLEEP} seconds...")
+            time.sleep(API_RETRY_SLEEP)
+        except Exception as e:
+            print(type(e), repr(e))
+
+    return output
+
+
+def chat_completion_sber(model, messages, temperature, max_tokens, api_dict=None):
+    payload = json.dumps(
+        {
+            "model": model,
+            "messages": messages,
+            "temperature": 0.01 if temperature == 0 else temperature,
+            "stream": False,
+            "max_tokens": max_tokens,
+        },
+        # ensure_ascii=False
+    )
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': f'Bearer {GIGACHAT_TOKEN}'
+    }
+
+    output: str = API_ERROR_OUTPUT
+    prompt_tokens = 0
+    completion_tokens = 0
+
+    for _ in range(API_MAX_RETRY):
+        try:
+            response = requests.request("POST", SBER_POST_URL, headers=headers, data=payload, verify=False)
+
+            response.raise_for_status()
+            response_json = response.json()
+
+            output = response_json["choices"][0]["message"]["content"]
+
+            time.sleep(1)
+
+            break
+        except requests.exceptions.HTTPError as http_err:
+            print("Error", http_err)
+            print("TEXT", response.text)
+            print(f"HTTP error occurred: {repr(http_err)}, code: {http_err.response.status_code}")
+            if http_err.response.status_code == 429:
+                print(f"Sleep for {API_RETRY_SLEEP} seconds...")
+            time.sleep(API_RETRY_SLEEP)
+        except Exception as e:
+            print(type(e), repr(e))
+
+    return output
 
 def reorg_answer_file(answer_file):
     """Sort by question id and de-duplication"""

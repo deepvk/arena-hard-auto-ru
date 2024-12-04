@@ -26,3 +26,136 @@ gpt-4-1106-preview:
     endpoints: null
     api_type: openai
     parallel: 8
+
+gpt-4o-mini-2024-07-18:
+    model_name: gpt-4o-mini-2024-07-18
+    endpoints: null
+    api_type: openai
+    parallel: 8
+
+gpt-4o-2024-11-20:
+    model_name: gpt-4o-2024-11-20
+    endpoints: null
+    api_type: openai
+    parallel: 8
+
+gpt-4-turbo-2024-04-09:
+    model_name: gpt-4-turbo-2024-04-09
+    endpoints: null
+    api_type: openai
+    parallel: 8
+
+meta-llama-Llama-3.1-8B-Instruct:
+    model_name: meta-llama/Llama-3.1-8B-Instruct
+    endpoints:
+        - api_base: # Place your vllm api_base
+          api_key: # Place your api_key
+    api_type: openai
+    parallel: 100
+    tokenizer: meta-llama/Llama-3.1-8B-Instruct
+
+Vikhr-Nemo-12B-Instruct-R-21-09-24:
+    model_name: Vikhrmodels/Vikhr-Nemo-12B-Instruct-R-21-09-24
+    endpoints:
+        - api_base: # Place your vllm api_base
+          api_key: # Place your api_key
+    api_type: openai
+    parallel: 100
+    tokenizer: Vikhrmodels/Vikhr-Nemo-12B-Instruct-R-21-09-24
+
+mistralai-Mistral-Nemo-Instruct-2407:
+    model_name: mistralai/Mistral-Nemo-Instruct-2407
+    endpoints:
+        - api_base: # Place your vllm api_base
+          api_key: # Place your api_key
+    api_type: openai
+    parallel: 100
+    tokenizer: mistralai/Mistral-Nemo-Instruct-2407
+
+saiga_nemo_12b:
+    model_name: IlyaGusev/saiga_nemo_12b
+    endpoints:
+        - api_base: # Place your vllm api_base
+          api_key: # Place your api_key
+    api_type: openai
+    parallel: 100
+    tokenizer: IlyaGusev/saiga_nemo_12b
+
+
+saiga_llama3_8b:
+    model_name: IlyaGusev/saiga_llama3_8b
+    endpoints:
+        - api_base: # Place your vllm api_base
+          api_key: # Place your api_key
+    api_type: openai
+    parallel: 100
+    tokenizer: IlyaGusev/saiga_llama3_8b
+
+saiga_gemma2_9b:
+    model_name: IlyaGusev/saiga_gemma2_9b
+    endpoints:
+        - api_base: # Place your vllm api_base
+          api_key: # Place your api_key
+    api_type: openai
+    parallel: 100
+    tokenizer: IlyaGusev/saiga_gemma2_9b
+
+gemma-2-9b-it:
+    model_name: google/gemma-2-9b-it
+    endpoints:
+        - api_base: # Place your vllm api_base
+          api_key: # Place your api_key
+    api_type: openai
+    parallel: 100
+    tokenizer: google/gemma-2-9b-it
+
+T-lite-instruct-0.1:
+    model_name: AnatoliiPotapov/T-lite-instruct-0.1
+    endpoints:
+        - api_base: # Place your vllm api_base
+          api_key: # Place your api_key
+    api_type: openai
+    parallel: 100
+    tokenizer: AnatoliiPotapov/T-lite-instruct-0.1
+
+GigaChat-02-12-24:
+    model_name: GigaChat
+    endpoints: null
+    api_type: sber
+    parallel: 1
+
+GigaChat-Pro-02-12-24:
+    model_name: GigaChat-Pro
+    endpoints: null
+    api_type: sber
+    parallel: 1
+
+GigaChat-Max-02-12-24:
+    model_name: GigaChat-Max
+    endpoints: null
+    api_type: sber
+    parallel: 1
+
+yandexgpt-lite-02-12-24:
+    model_name: yandexgpt-lite
+    endpoints: null
+    api_type: yandex
+    parallel: 1
+
+yandexgpt-02-12-24:
+    model_name: yandexgpt
+    endpoints: null
+    api_type: yandex
+    parallel: 1
+
+claude-3-5-sonnet-20241022:
+    model_name: claude-3-5-sonnet-20241022
+    endpoints: null
+    api_type: anthropic
+    parallel: 8
+
+claude-3-5-haiku-20241022:
+    model_name: claude-3-5-haiku-20241022
+    endpoints: null
+    api_type: anthropic
+    parallel: 8

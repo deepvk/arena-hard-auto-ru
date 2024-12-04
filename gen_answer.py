@@ -26,6 +26,8 @@ from utils import (
     chat_completion_mistral,
     http_completion_gemini,
     chat_completion_cohere,
+    chat_completion_yandex,
+    chat_completion_sber,
     reorg_answer_file,
     OPENAI_MODEL_LIST,
     temperature_config,
@@ -79,6 +81,23 @@ def get_answer(
                                                 messages=conv,
                                                 temperature=temperature,
                                                 max_tokens=max_tokens)
+            elif api_type == "yandex":
+                for reply in conv:  # Rename key name for compatibility with yandex api
+                    reply["text"] = reply.pop("content")
+
+                output= chat_completion_yandex(
+                    model=endpoint_info["model_name"],
+                    messages=conv,
+                    temperature=temperature,
+                    max_tokens=max_tokens
+                )
+            elif api_type == "sber":
+                output = chat_completion_sber(
+                    model=endpoint_info["model_name"],
+                    messages=conv,
+                    temperature=temperature,
+                    max_tokens=max_tokens
+                )
             else:
                 output = chat_completion_openai(model=endpoint_info["model_name"], 
                                                 messages=conv, 
@@ -108,7 +127,7 @@ def get_answer(
 
     os.makedirs(os.path.dirname(answer_file), exist_ok=True)
     with open(answer_file, "a") as fout:
-        fout.write(json.dumps(ans) + "\n")
+        fout.write(json.dumps(ans, ensure_ascii=False) + "\n")
 
 
 if __name__ == "__main__":

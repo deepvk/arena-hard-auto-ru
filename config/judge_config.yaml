@@ -1,14 +1,14 @@
 name: judgment config file for Arena Hard
 
-bench_name: arena-hard-v0.1
+bench_name: ru-arena-hard-v0.1  # or ru-arena-general
 
 # Arena Hard default
-judge_model: gpt-4-1106-preview
+judge_model: gpt-4o-2024-11-20  # or claude-3-5-sonnet-20241022
 reference: False # Optional
 ref_model: null  
 
 baseline: True
-baseline_model: gpt-4-0314
+baseline_model: gpt-4o-mini-2024-07-18
 
 pairwise: True
 temperature: 0
@@ -22,4 +22,21 @@ prompt_template: ["<|User Prompt|>\n{question_1}\n\n<|The Start of Assistant A's
 
 # Add your model below for evaluation
 model_list:
-  - gpt-3.5-turbo-0125
+  - T-lite-instruct-0.1
+  - GigaChat-Max-02-12-24
+  - GigaChat-02-12-24
+  - GigaChat-Pro-02-12-24
+  - yandexgpt-lite-02-12-24
+  - yandexgpt-02-12-24
+  - claude-3-5-sonnet-20241022
+  - claude-3-5-haiku-20241022
+  - Vikhr-Nemo-12B-Instruct-R-21-09-24
+  - meta-llama-Llama-3.1-8B-Instruct
+  - gpt-4o-mini-2024-07-18
+  - gpt-4o-2024-11-20
+  - gpt-4-turbo-2024-04-09
+  - mistralai-Mistral-Nemo-Instruct-2407
+  - saiga_nemo_12b
+  - saiga_llama3_8b
+  - saiga_gemma2_9b
+  - gemma-2-9b-it
